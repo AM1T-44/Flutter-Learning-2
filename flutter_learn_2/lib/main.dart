@@ -39,22 +39,44 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(widget.title),
         ),
         body: Center(
-          child: Container(
-            height: 200,
-            width: 200,
-            child: Column(
-              children: [
-                Text(
-                  'Current Time: ${DateFormat('MMMMEEEEd').format(time)}',
-                  style: TextStyle(fontSize: 25),
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      setState(() {});
-                    },
-                    child: Text('Current Time'))
-              ],
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Select Date',
+                style: TextStyle(fontSize: 25),
+              ),
+              ElevatedButton(
+                  onPressed: () async {
+                    DateTime? datePicked = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2020),
+                        lastDate: DateTime(2030));
+
+                    if (datePicked != null) {
+                      print(
+                          'Date selected: ${DateFormat('yMMMMd').format(datePicked)}');
+                    }
+                  },
+                  child: Text('Show')),
+              Container(
+                height: 10,
+              ),
+              ElevatedButton(
+                  onPressed: () async {
+                    TimeOfDay? timePicked = await showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay.now(),
+                        initialEntryMode: TimePickerEntryMode.dial);
+
+                    if (timePicked != null) {
+                      print(
+                          'Time Selected: ${timePicked.hour}: ${timePicked.minute}');
+                    }
+                  },
+                  child: Text('Show Time'))
+            ],
           ),
         ));
   }
