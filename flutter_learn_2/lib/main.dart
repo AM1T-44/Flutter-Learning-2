@@ -31,53 +31,56 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    var time = DateTime.now();
+    var arrColor = [
+      Colors.red,
+      Colors.orange,
+      Colors.green,
+      Colors.yellow,
+      Colors.blue,
+      Colors.cyan,
+      Colors.purple,
+      Colors.pink,
+      Colors.grey,
+    ];
 
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Select Date',
-                style: TextStyle(fontSize: 25),
-              ),
-              ElevatedButton(
-                  onPressed: () async {
-                    DateTime? datePicked = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(2020),
-                        lastDate: DateTime(2030));
-
-                    if (datePicked != null) {
-                      print(
-                          'Date selected: ${DateFormat('yMMMMd').format(datePicked)}');
-                    }
-                  },
-                  child: Text('Show')),
-              Container(
-                height: 10,
-              ),
-              ElevatedButton(
-                  onPressed: () async {
-                    TimeOfDay? timePicked = await showTimePicker(
-                        context: context,
-                        initialTime: TimeOfDay.now(),
-                        initialEntryMode: TimePickerEntryMode.dial);
-
-                    if (timePicked != null) {
-                      print(
-                          'Time Selected: ${timePicked.hour}: ${timePicked.minute}');
-                    }
-                  },
-                  child: Text('Show Time'))
-            ],
-          ),
+        body: GridView.count(
+          crossAxisCount: 3,
+          crossAxisSpacing: 11,
+          mainAxisSpacing: 11,
+          children: [
+            Container(
+              color: arrColor[0],
+            ),
+            Container(
+              color: arrColor[1],
+            ),
+            Container(
+              color: arrColor[2],
+            ),
+            Container(
+              color: arrColor[3],
+            ),
+            Container(
+              color: arrColor[4],
+            ),
+            Container(
+              color: arrColor[5],
+            ),
+            Container(
+              color: arrColor[6],
+            ),
+            Container(
+              color: arrColor[7],
+            ),
+            Container(
+              color: arrColor[8],
+            ),
+          ],
         ));
   }
 }
