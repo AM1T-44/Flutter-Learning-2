@@ -48,39 +48,13 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
         ),
-        body: GridView.count(
-          crossAxisCount: 3,
-          crossAxisSpacing: 11,
-          mainAxisSpacing: 11,
-          children: [
-            Container(
-              color: arrColor[0],
-            ),
-            Container(
-              color: arrColor[1],
-            ),
-            Container(
-              color: arrColor[2],
-            ),
-            Container(
-              color: arrColor[3],
-            ),
-            Container(
-              color: arrColor[4],
-            ),
-            Container(
-              color: arrColor[5],
-            ),
-            Container(
-              color: arrColor[6],
-            ),
-            Container(
-              color: arrColor[7],
-            ),
-            Container(
-              color: arrColor[8],
-            ),
-          ],
+        body: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3, crossAxisSpacing: 11, mainAxisSpacing: 11),
+          itemBuilder: (context, index) {
+            return Container(color: arrColor[index]);
+          },
+          itemCount: arrColor.length,
         ));
   }
 }
