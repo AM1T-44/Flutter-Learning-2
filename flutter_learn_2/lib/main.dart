@@ -37,36 +37,56 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        body: Wrap(
+          direction: Axis.horizontal,
+          spacing: 11,
+          runSpacing: 11,
+          alignment: WrapAlignment.center,
           children: [
             Container(
-              width: 140,
-              height: 50,
-              child: RoundedButton(
-                btnName: 'Play',
-                icon: Icon(Icons.play_arrow),
-                callback: () {
-                  print("played!");
-                },
-                bgColor: Colors.blue,
-                textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
+              height: 150,
+              width: 150,
+              color: Colors.amber,
             ),
             Container(
-              height: 11,
+              height: 150,
+              width: 150,
+              color: Colors.orange,
             ),
             Container(
-              width: 140,
-              height: 50,
-              child: RoundedButton(
-                btnName: "Press",
-                callback: () {
-                  print('Pressed!');
-                },
-                bgColor: Colors.amber,
-                textStyle: TextStyle(fontSize: 20),
-              ),
+              height: 150,
+              width: 150,
+              color: Colors.red,
+            ),
+            Container(
+              height: 150,
+              width: 150,
+              color: Colors.pink,
+            ),
+            Container(
+              height: 150,
+              width: 150,
+              color: Colors.purple,
+            ),
+            Container(
+              height: 150,
+              width: 150,
+              color: Colors.lightBlue,
+            ),
+            Container(
+              height: 150,
+              width: 150,
+              color: Colors.blue,
+            ),
+            Container(
+              height: 150,
+              width: 150,
+              color: Colors.lightGreen,
+            ),
+            Container(
+              height: 150,
+              width: 150,
+              color: Colors.green,
             )
           ],
         ));
