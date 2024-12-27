@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_learn_2/widgets/rounded_btn.dart';
 import 'package:intl/intl.dart';
 
 void main() {
@@ -32,65 +33,42 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      // body: Container(
-      //   height: 300,
-      //   width: 300,
-      //   child: Stack(
-      //     children: [
-      //       Positioned(
-      //         child: Container(
-      //           height: 200,
-      //           width: 200,
-      //           color: Colors.red,
-      //         ),
-      //       ),
-      //       Positioned(
-      //         left: 25,
-      //         top: 25,
-      //         child: Container(
-      //           height: 200,
-      //           width: 200,
-      //           color: Colors.green,
-      //         ),
-      //       ),
-      //       Positioned(
-      //         left: 50,
-      //         top: 50,
-      //         child: Container(
-      //           height: 200,
-      //           width: 200,
-      //           color: Colors.blue,
-      //         ),
-      //       )
-      //     ],
-      //   ),
-      // ),
-
-      body: Stack(
-        children: [
-          Container(
-            height: 150,
-            width: 300,
-            color: Colors.green,
-          ),
-          Positioned(
-            left: 100,
-            top: 25,
-            child: Container(
-              height: 100,
-              width: 100,
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(50),
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Text(widget.title),
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 140,
+              height: 50,
+              child: RoundedButton(
+                btnName: 'Play',
+                icon: Icon(Icons.play_arrow),
+                callback: () {
+                  print("played!");
+                },
+                bgColor: Colors.blue,
+                textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
-          )
-        ],
-      ),
-    );
+            Container(
+              height: 11,
+            ),
+            Container(
+              width: 140,
+              height: 50,
+              child: RoundedButton(
+                btnName: "Press",
+                callback: () {
+                  print('Pressed!');
+                },
+                bgColor: Colors.amber,
+                textStyle: TextStyle(fontSize: 20),
+              ),
+            )
+          ],
+        ));
   }
 }
