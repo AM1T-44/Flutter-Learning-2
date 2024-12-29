@@ -5,6 +5,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_learn_2/widgets/rounded_btn.dart';
 import 'package:intl/intl.dart';
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -39,29 +41,18 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
         ),
-        body: RichText(
-            text: TextSpan(
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-                children: [
-              TextSpan(text: 'Hello '),
-              TextSpan(
-                  text: 'World!\n',
-                  style: TextStyle(
-                      fontSize: 33,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue)),
-              TextSpan(
-                text: 'Wellcome to ',
-              ),
-              TextSpan(
-                  text: 'flutter',
-                  style: TextStyle(
-                    fontSize: 33,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.amber,
-                  ))
-            ])));
+        body: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.facebook, size: 100, color: Colors.blue),
+              FaIcon(
+                FontAwesomeIcons.whatsapp,
+                size: 100,
+                color: Colors.green,
+              )
+            ],
+          ),
+        ));
   }
 }
