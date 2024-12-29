@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_learn_2/widgets/rounded_btn.dart';
@@ -37,58 +39,29 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
         ),
-        body: Wrap(
-          direction: Axis.horizontal,
-          spacing: 11,
-          runSpacing: 11,
-          alignment: WrapAlignment.center,
-          children: [
-            Container(
-              height: 150,
-              width: 150,
-              color: Colors.amber,
-            ),
-            Container(
-              height: 150,
-              width: 150,
-              color: Colors.orange,
-            ),
-            Container(
-              height: 150,
-              width: 150,
-              color: Colors.red,
-            ),
-            Container(
-              height: 150,
-              width: 150,
-              color: Colors.pink,
-            ),
-            Container(
-              height: 150,
-              width: 150,
-              color: Colors.purple,
-            ),
-            Container(
-              height: 150,
-              width: 150,
-              color: Colors.lightBlue,
-            ),
-            Container(
-              height: 150,
-              width: 150,
-              color: Colors.blue,
-            ),
-            Container(
-              height: 150,
-              width: 150,
-              color: Colors.lightGreen,
-            ),
-            Container(
-              height: 150,
-              width: 150,
-              color: Colors.green,
-            )
-          ],
-        ));
+        body: RichText(
+            text: TextSpan(
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+                children: [
+              TextSpan(text: 'Hello '),
+              TextSpan(
+                  text: 'World!\n',
+                  style: TextStyle(
+                      fontSize: 33,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue)),
+              TextSpan(
+                text: 'Wellcome to ',
+              ),
+              TextSpan(
+                  text: 'flutter',
+                  style: TextStyle(
+                    fontSize: 33,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.amber,
+                  ))
+            ])));
   }
 }
