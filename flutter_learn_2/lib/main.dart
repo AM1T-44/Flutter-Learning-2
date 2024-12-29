@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_learn_2/introPage.dart';
 import 'package:flutter_learn_2/widgets/rounded_btn.dart';
 import 'package:intl/intl.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: MyHomePage(),
+      home: IntroPage(),
     );
   }
 }
@@ -32,84 +33,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
-  var controller1 = TextEditingController();
-  var controller2 = TextEditingController();
-
-  var result = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Hello, everyone'),
-        ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(30),
-            child: Column(
-              children: [
-                TextField(
-                  controller: controller1,
-                  keyboardType: TextInputType.number,
-                ),
-                TextField(
-                  controller: controller2,
-                  keyboardType: TextInputType.number,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              var no1 = int.parse(controller1.text.toString());
-                              var no2 = int.parse(controller2.text.toString());
-                              result = no1 + no2;
-                            });
-                          },
-                          child: Text('Add')),
-                      ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              var no1 = int.parse(controller1.text.toString());
-                              var no2 = int.parse(controller2.text.toString());
-                              result = no1 - no2;
-                            });
-                          },
-                          child: Text('Sub')),
-                      ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              var no1 = int.parse(controller1.text.toString());
-                              var no2 = int.parse(controller2.text.toString());
-                              result = no1 * no2;
-                            });
-                          },
-                          child: Text('Mul')),
-                      ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              var no1 = int.parse(controller1.text.toString());
-                              var no2 = int.parse(controller2.text.toString());
-                              result = no1 % no2;
-                            });
-                          },
-                          child: Text('Mod')),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(30),
-                  child: Text(
-                    'Result: $result',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ));
+      appBar: AppBar(
+        title: Text('Home Page'),
+        backgroundColor: const Color.fromARGB(255, 180, 61, 210),
+      ),
+      body: Text('Hello!'),
+    );
   }
 }
