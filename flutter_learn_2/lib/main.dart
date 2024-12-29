@@ -26,61 +26,90 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
+  State<MyHomePage> createState() {
     return MyHomePageState();
   }
 }
 
 class MyHomePageState extends State<MyHomePage> {
-  int count = 0;
+  var controller1 = TextEditingController();
+  var controller2 = TextEditingController();
+
+  var result = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Stateful'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Count: $count',
-              style: TextStyle(fontSize: 30),
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    count++;
-                  });
-                },
-                child: Text('Increment Count')),
-          ],
+        appBar: AppBar(
+          title: Text('Hello, everyone'),
         ),
-      ),
-    );
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(30),
+            child: Column(
+              children: [
+                TextField(
+                  controller: controller1,
+                  keyboardType: TextInputType.number,
+                ),
+                TextField(
+                  controller: controller2,
+                  keyboardType: TextInputType.number,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              var no1 = int.parse(controller1.text.toString());
+                              var no2 = int.parse(controller2.text.toString());
+                              result = no1 + no2;
+                            });
+                          },
+                          child: Text('Add')),
+                      ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              var no1 = int.parse(controller1.text.toString());
+                              var no2 = int.parse(controller2.text.toString());
+                              result = no1 - no2;
+                            });
+                          },
+                          child: Text('Sub')),
+                      ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              var no1 = int.parse(controller1.text.toString());
+                              var no2 = int.parse(controller2.text.toString());
+                              result = no1 * no2;
+                            });
+                          },
+                          child: Text('Mul')),
+                      ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              var no1 = int.parse(controller1.text.toString());
+                              var no2 = int.parse(controller2.text.toString());
+                              result = no1 % no2;
+                            });
+                          },
+                          child: Text('Mod')),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(30),
+                  child: Text(
+                    'Result: $result',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ));
   }
 }
-
-
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({super.key, required this.title});
-
-//   final String title;
-
-//   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<MyHomePage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         appBar: AppBar(
-//           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-//           title: Text(widget.title),
-//         ),
-        
-//         );
-//   }
-// }
