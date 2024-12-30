@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      home: MyHomePage(),
     );
   }
 }
@@ -34,117 +34,27 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
-  var controller1 = TextEditingController();
+  RangeValues val = RangeValues(0, 10);
   @override
   Widget build(BuildContext context) {
+    RangeLabels labels = RangeLabels(val.start.toString(), val.end.toString());
     return Scaffold(
       appBar: AppBar(
         title: Text('Home Page'),
         backgroundColor: const Color.fromARGB(255, 180, 61, 210),
+        foregroundColor: Colors.white,
       ),
       body: Center(
-        child: Container(
-          width: 300,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'DashBoard Screen',
-                style: TextStyle(fontSize: 25),
-              ),
-              SizedBox(
-                height: 11,
-              ),
-              TextField(
-                controller: controller1,
-              ),
-              SizedBox(
-                height: 11,
-              ),
-              RoundedButton(
-                  btnName: 'Next',
-                  bgColor: Colors.blue,
-                  callback: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            myProfile(controller1.text.toString()),
-                      )))
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class myProfile extends StatelessWidget {
-  var nameFromHome;
-
-  myProfile(this.nameFromHome);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile Page'),
-        backgroundColor: const Color.fromARGB(255, 180, 61, 210),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Welcome, $nameFromHome',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('Back'))
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SplashScreen extends StatefulWidget {
-  @override
-  State<SplashScreen> createState() {
-    return _SplashScreenState();
-  }
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    Timer(Duration(seconds: 1), () {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MyHomePage(),
-          ));
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Colors.blue.shade600,
-        child: Center(
-          child: Text(
-            'Wellcome',
-            style: TextStyle(
-                fontSize: 33, fontWeight: FontWeight.bold, color: Colors.white),
-          ),
-        ),
-      ),
+          child: RangeSlider(
+              values: val,
+              max: 10,
+              min: 0,
+              labels: labels,
+              divisions: 10,
+              onChanged: (newVal) {
+                val = newVal;
+                setState(() {});
+              })),
     );
   }
 }
