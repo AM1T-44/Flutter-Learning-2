@@ -34,6 +34,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
+  var controller1 = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,23 +42,93 @@ class MyHomePageState extends State<MyHomePage> {
         title: Text('Home Page'),
         backgroundColor: const Color.fromARGB(255, 180, 61, 210),
       ),
+      body: Center(
+        child: Container(
+          width: 300,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'DashBoard Screen',
+                style: TextStyle(fontSize: 25),
+              ),
+              SizedBox(
+                height: 11,
+              ),
+              TextField(
+                controller: controller1,
+              ),
+              SizedBox(
+                height: 11,
+              ),
+              RoundedButton(
+                  btnName: 'Next',
+                  bgColor: Colors.blue,
+                  callback: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            myProfile(controller1.text.toString()),
+                      )))
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class myProfile extends StatelessWidget {
+  var nameFromHome;
+
+  myProfile(this.nameFromHome);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Profile Page'),
+        backgroundColor: const Color.fromARGB(255, 180, 61, 210),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Welcome, $nameFromHome',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Back'))
+          ],
+        ),
+      ),
     );
   }
 }
 
 class SplashScreen extends StatefulWidget {
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  State<SplashScreen> createState() {
+    return _SplashScreenState();
+  }
 }
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
 
-    Timer(Duration(seconds: 2), () {
+    Timer(Duration(seconds: 1), () {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => MyHomePage()));
+          context,
+          MaterialPageRoute(
+            builder: (context) => MyHomePage(),
+          ));
     });
   }
 
@@ -70,7 +141,7 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Text(
             'Wellcome',
             style: TextStyle(
-                fontSize: 33, color: Colors.white, fontWeight: FontWeight.bold),
+                fontSize: 33, fontWeight: FontWeight.bold, color: Colors.white),
           ),
         ),
       ),
