@@ -68,49 +68,49 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var _opacity = 1.0;
-  bool toggle = true;
+  var toggle = true;
+  @override
+  void initState() {
+    super.initState();
+    Timer(
+      Duration(seconds: 2),
+      () => reload(),
+    );
+  }
+
+  void reload() {
+    setState(() {
+      toggle = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Home Page",
-            style: TextStyle(
-                fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),
-          ),
-          backgroundColor: Colors.purple.shade600,
+      appBar: AppBar(
+        title: Text(
+          "Home Page",
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),
         ),
-        body: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AnimatedOpacity(
-              opacity: _opacity,
-              duration: Duration(seconds: 2),
-              curve: Curves.fastOutSlowIn,
-              child: Container(
-                height: 200,
-                width: 200,
-                color: Colors.pink,
-              ),
+        backgroundColor: Colors.purple.shade600,
+      ),
+      body: Center(
+        child: AnimatedCrossFade(
+            firstChild: Container(
+              height: 200,
+              width: 200,
+              color: Colors.amber.shade300,
             ),
-            SizedBox(
-              height: 11,
+            secondChild: Image.asset(
+              'assets/images/lionel-messi.jpg',
+              width: 200,
+              height: 200,
             ),
-            ElevatedButton(
-                onPressed: () {
-                  if (toggle) {
-                    _opacity = .4;
-                  } else {
-                    _opacity = 1;
-                  }
-                  toggle ^= true;
-                  setState(() {});
-                },
-                child: Text('Animate'))
-          ],
-        )));
+            crossFadeState:
+                toggle ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+            duration: Duration(seconds: 1)),
+      ),
+    );
   }
 }
