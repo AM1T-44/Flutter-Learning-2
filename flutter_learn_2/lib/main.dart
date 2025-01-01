@@ -79,44 +79,51 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Home Page",
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),
+          ),
+          backgroundColor: Colors.purple.shade600,
+        ),
+        body: Center(
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => newPage(),
+                  ));
+            },
+            child: Hero(
+                tag: 'messi',
+                child: Image.asset(
+                  'assets/images/lionel-messi.jpg',
+                  height: 100,
+                  width: 150,
+                )),
+          ),
+        ));
+  }
+}
+
+// New Page
+
+class newPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Home Page",
+          "New Page",
           style: TextStyle(
               fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),
         ),
-        backgroundColor: Colors.purple.shade600,
+        backgroundColor: const Color.fromARGB(255, 172, 50, 205),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AnimatedCrossFade(
-                firstChild: Container(
-                  height: 200,
-                  width: 200,
-                  color: Colors.amber.shade300,
-                ),
-                secondChild: Image.asset(
-                  'assets/images/lionel-messi.jpg',
-                  width: 200,
-                  height: 200,
-                ),
-                crossFadeState: toggle
-                    ? CrossFadeState.showFirst
-                    : CrossFadeState.showSecond,
-                duration: Duration(seconds: 2)),
-            SizedBox(
-              height: 21,
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  reload();
-                },
-                child: Text('Animate'))
-          ],
-        ),
-      ),
+      body: Hero(
+          tag: 'messi', child: Image.asset('assets/images/lionel-messi.jpg')),
     );
   }
 }
