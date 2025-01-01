@@ -68,62 +68,33 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var toggle = true;
-  @override
-  void reload() {
-    setState(() {
-      toggle ^= true;
-    });
-  }
+  var arrayIndex = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Home Page",
-            style: TextStyle(
-                fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),
-          ),
-          backgroundColor: Colors.purple.shade600,
-        ),
-        body: Center(
-          child: InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => newPage(),
-                  ));
-            },
-            child: Hero(
-                tag: 'messi',
-                child: Image.asset(
-                  'assets/images/lionel-messi.jpg',
-                  height: 100,
-                  width: 150,
-                )),
-          ),
-        ));
-  }
-}
-
-// New Page
-
-class newPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "New Page",
+          "ListWheel ScrollView Widget",
           style: TextStyle(
               fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),
         ),
-        backgroundColor: const Color.fromARGB(255, 172, 50, 205),
+        backgroundColor: Colors.purple.shade600,
       ),
-      body: Hero(
-          tag: 'messi', child: Image.asset('assets/images/lionel-messi.jpg')),
+      body: ListWheelScrollView(
+          itemExtent: 200,
+          children: arrayIndex
+              .map((value) => Container(
+                    width: double.infinity,
+                    color: Colors.purple.shade200,
+                    child: Center(
+                      child: Text(
+                        '$value',
+                        style: TextStyle(fontSize: 25),
+                      ),
+                    ),
+                  ))
+              .toList()),
     );
   }
 }
