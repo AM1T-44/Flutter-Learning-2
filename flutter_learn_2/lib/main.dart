@@ -70,17 +70,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   var toggle = true;
   @override
-  void initState() {
-    super.initState();
-    Timer(
-      Duration(seconds: 2),
-      () => reload(),
-    );
-  }
-
   void reload() {
     setState(() {
-      toggle = false;
+      toggle ^= true;
     });
   }
 
@@ -96,20 +88,34 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.purple.shade600,
       ),
       body: Center(
-        child: AnimatedCrossFade(
-            firstChild: Container(
-              height: 200,
-              width: 200,
-              color: Colors.amber.shade300,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AnimatedCrossFade(
+                firstChild: Container(
+                  height: 200,
+                  width: 200,
+                  color: Colors.amber.shade300,
+                ),
+                secondChild: Image.asset(
+                  'assets/images/lionel-messi.jpg',
+                  width: 200,
+                  height: 200,
+                ),
+                crossFadeState: toggle
+                    ? CrossFadeState.showFirst
+                    : CrossFadeState.showSecond,
+                duration: Duration(seconds: 2)),
+            SizedBox(
+              height: 21,
             ),
-            secondChild: Image.asset(
-              'assets/images/lionel-messi.jpg',
-              width: 200,
-              height: 200,
-            ),
-            crossFadeState:
-                toggle ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-            duration: Duration(seconds: 1)),
+            ElevatedButton(
+                onPressed: () {
+                  reload();
+                },
+                child: Text('Animate'))
+          ],
+        ),
       ),
     );
   }
