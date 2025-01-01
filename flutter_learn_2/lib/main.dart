@@ -68,33 +68,33 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var _height = 100.0;
-  var _width = 200.0;
+  var _opacity = 1.0;
   bool toggle = true;
-  Decoration decor = BoxDecoration(
-      borderRadius: BorderRadius.circular(5), color: Colors.purple);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Home Page",
-          style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),
+        appBar: AppBar(
+          title: Text(
+            "Home Page",
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),
+          ),
+          backgroundColor: Colors.purple.shade600,
         ),
-        backgroundColor: Colors.purple.shade600,
-      ),
-      body: Center(
-        child: Column(
+        body: Center(
+            child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AnimatedContainer(
+            AnimatedOpacity(
+              opacity: _opacity,
               duration: Duration(seconds: 2),
-              height: _height,
-              width: _width,
-              decoration: decor,
-              curve: Curves.slowMiddle,
+              curve: Curves.fastOutSlowIn,
+              child: Container(
+                height: 200,
+                width: 200,
+                color: Colors.pink,
+              ),
             ),
             SizedBox(
               height: 11,
@@ -102,25 +102,15 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
                 onPressed: () {
                   if (toggle) {
-                    _height = 200.0;
-                    _width = 100.0;
-                    decor = BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.pink);
+                    _opacity = .4;
                   } else {
-                    _height = 100.0;
-                    _width = 200.0;
-                    decor = BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Colors.purple);
+                    _opacity = 1;
                   }
-                  setState(() {});
                   toggle ^= true;
+                  setState(() {});
                 },
                 child: Text('Animate'))
           ],
-        ),
-      ),
-    );
+        )));
   }
 }
