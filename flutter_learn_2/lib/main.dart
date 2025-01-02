@@ -69,16 +69,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var arrNames = [
-    'Amit',
-    'Tonoy',
-    'Anupom',
-    'Avi',
-    'Tanzil',
-    'Sayanta',
-    'Mahmud',
-    'Rayhan',
-    'Raihan',
-    'Shesher'
+    {'name': 'Amit', 'mob': '01712345678', 'unRead': '3'},
+    {'name': 'Tonoy', 'mob': '01798765432', 'unRead': '5'},
+    {'name': 'Anupom', 'mob': '01712345678', 'unRead': '1'},
+    {'name': 'Avi', 'mob': '01712121213', 'unRead': '7'},
+    {'name': 'Tanzil', 'mob': '01712345678', 'unRead': '3'},
+    {'name': 'Sayanta', 'mob': '01798765432', 'unRead': '5'},
+    {'name': 'Mahmud', 'mob': '01712345678', 'unRead': '1'},
+    {'name': 'Rayhan', 'mob': '01712121213', 'unRead': '7'},
+    {'name': 'Raihan', 'mob': '01712345678', 'unRead': '3'},
+    {'name': 'Shesher', 'mob': '01798765432', 'unRead': '5'},
+    {'name': 'Amit', 'mob': '01712345678', 'unRead': '3'},
+    {'name': 'Tonoy', 'mob': '01798765432', 'unRead': '5'},
   ];
 
   @override
@@ -92,27 +94,24 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           backgroundColor: Colors.purple.shade600,
         ),
-        body: Container(
-          child: ListView(
-            children: arrNames
-                .map(
-                  (e) => Padding(
-                    padding: const EdgeInsets.all(10),
+        body: ListView(
+          children: arrNames
+              .map((value) => Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      height: 100,
                       decoration: BoxDecoration(
-                          color: Colors.purple.shade400,
-                          borderRadius: BorderRadius.circular(11)),
-                      child: Center(
-                          child: Text(
-                        '$e',
-                        style: TextStyle(color: Colors.white),
-                      )),
+                          color: Colors.grey.shade400,
+                          borderRadius: BorderRadius.circular(16)),
+                      child: ListTile(
+                        leading: Icon(Icons.account_circle),
+                        title: Text('${value['name']}'),
+                        subtitle: Text('${value['mob']}'),
+                        trailing: CircleAvatar(
+                            radius: 10, child: Text('${value['unRead']}')),
+                      ),
                     ),
-                  ),
-                )
-                .toList(),
-          ),
+                  ))
+              .toList(),
         ));
   }
 }
