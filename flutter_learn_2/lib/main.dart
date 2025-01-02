@@ -71,25 +71,20 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "ClipRRect Widgets",
-          style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),
+        appBar: AppBar(
+          title: Text(
+            "Gradient",
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),
+          ),
+          backgroundColor: Colors.purple.shade600,
         ),
-        backgroundColor: Colors.purple.shade600,
-      ),
-      body: Center(
-        child: ClipRRect(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(55),
-              topRight: Radius.circular(25),
-              bottomLeft: Radius.circular(25),
-              bottomRight: Radius.circular(25)),
-          child: Image.asset('assets/images/lionel-messi.jpg',
-              height: 200, width: 400, fit: BoxFit.fill),
-        ),
-      ),
-    );
+        body: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+          colors: [Color(0xff145277), Color(0xff83d0cb)],
+          begin: FractionalOffset(0.0, 1.0),
+          end: FractionalOffset(1, 0),
+        ))));
   }
 }
