@@ -68,23 +68,51 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  var arrNames = [
+    'Amit',
+    'Tonoy',
+    'Anupom',
+    'Avi',
+    'Tanzil',
+    'Sayanta',
+    'Mahmud',
+    'Rayhan',
+    'Raihan',
+    'Shesher'
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            "Gradient",
+            "Mapping Lists to Widget",
             style: TextStyle(
                 fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),
           ),
           backgroundColor: Colors.purple.shade600,
         ),
         body: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-          colors: [Color(0xff145277), Color(0xff83d0cb)],
-          begin: FractionalOffset(0.0, 1.0),
-          end: FractionalOffset(1, 0),
-        ))));
+          child: ListView(
+            children: arrNames
+                .map(
+                  (e) => Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Container(
+                      height: 100,
+                      decoration: BoxDecoration(
+                          color: Colors.purple.shade400,
+                          borderRadius: BorderRadius.circular(11)),
+                      child: Center(
+                          child: Text(
+                        '$e',
+                        style: TextStyle(color: Colors.white),
+                      )),
+                    ),
+                  ),
+                )
+                .toList(),
+          ),
+        ));
   }
 }
