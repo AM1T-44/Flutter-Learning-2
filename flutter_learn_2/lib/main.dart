@@ -10,7 +10,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +22,8 @@ class MyApp extends StatelessWidget {
 }
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   State<SplashScreen> createState() {
     return _SplashScreen();
@@ -32,7 +34,7 @@ class _SplashScreen extends State<SplashScreen> {
   @override
   void initState() {
     Timer(
-      Duration(seconds: 0),
+      const Duration(seconds: 0),
       () {
         Navigator.pushReplacement(
             context,
@@ -48,7 +50,7 @@ class _SplashScreen extends State<SplashScreen> {
     return Scaffold(
       body: Container(
         color: Colors.blue.shade400,
-        child: Center(
+        child: const Center(
           child: Text(
             'Animation Learning',
             style: TextStyle(
@@ -61,6 +63,8 @@ class _SplashScreen extends State<SplashScreen> {
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   State<MyHomePage> createState() {
     return _MyHomePageState();
@@ -69,45 +73,51 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
-  late AnimationController animationController;
-  late Animation animation;
-  late Animation colorAnimation;
+  late AnimationController _animationController;
+  late Animation _animation;
+
+  var size = [150.0, 200.0, 250.0, 300.0, 350.0];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    animationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 4));
-    animation = Tween(begin: 100.0, end: 200.0).animate(animationController);
+    _animationController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 8));
+    _animation = Tween(begin: 0.0, end: 1.0).animate(_animationController);
 
-    colorAnimation = ColorTween(begin: Colors.purple, end: Colors.yellow)
-        .animate(animationController);
+    _animationController.addListener(
+      () => setState(() {}),
+    );
 
-    animationController.addListener(() {
-      setState(() {});
-    });
-
-    animationController.forward();
+    _animationController.forward();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Tween Animation ",
+        title: const Text(
+          "Ripple Animation Effects",
           style: TextStyle(
               fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),
         ),
         backgroundColor: Colors.purple.shade600,
       ),
       body: Center(
-        child: Container(
-          height: animation.value,
-          width: animation.value,
-          color: colorAnimation.value,
+        child: Stack(
+          alignment: Alignment.center,
+          children: size
+              .map((radius) => Container(
+                    height: radius * _animation.value,
+                    width: radius * _animation.value,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color:
+                            Colors.purple.withOpacity(1.0 - _animation.value)),
+                  ))
+              .toList(),
         ),
       ),
     );

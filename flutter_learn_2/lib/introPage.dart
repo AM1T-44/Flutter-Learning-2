@@ -2,23 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_learn_2/main.dart';
 
 class IntroPage extends StatelessWidget {
+  const IntroPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Intro Page'),
+          title: const Text('Intro Page'),
           backgroundColor: Colors.amber.shade400,
         ),
         body: Column(
           children: [
-            Text(
+            const Text(
               'Wellcome',
               style: TextStyle(
                 fontSize: 34,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 11,
             ),
             ElevatedButton(
@@ -26,7 +28,7 @@ class IntroPage extends StatelessWidget {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => MyHomePage()));
                 },
-                child: Text('Home'))
+                child: const Text('Home'))
           ],
         ));
   }
