@@ -68,33 +68,28 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var arrayIndex = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "ListWheel ScrollView Widget",
+          "ClipRRect Widgets",
           style: TextStyle(
               fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),
         ),
         backgroundColor: Colors.purple.shade600,
       ),
-      body: ListWheelScrollView(
-          itemExtent: 200,
-          children: arrayIndex
-              .map((value) => Container(
-                    width: double.infinity,
-                    color: Colors.purple.shade200,
-                    child: Center(
-                      child: Text(
-                        '$value',
-                        style: TextStyle(fontSize: 25),
-                      ),
-                    ),
-                  ))
-              .toList()),
+      body: Center(
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(55),
+              topRight: Radius.circular(25),
+              bottomLeft: Radius.circular(25),
+              bottomRight: Radius.circular(25)),
+          child: Image.asset('assets/images/lionel-messi.jpg',
+              height: 200, width: 400, fit: BoxFit.fill),
+        ),
+      ),
     );
   }
 }
