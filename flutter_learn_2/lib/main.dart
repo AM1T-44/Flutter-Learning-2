@@ -73,8 +73,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation _animation;
+  late AnimationController animationController;
+  late Animation animation;
 
   var size = [150.0, 200.0, 250.0, 300.0, 350.0];
 
@@ -83,15 +83,15 @@ class _MyHomePageState extends State<MyHomePage>
     // TODO: implement initState
     super.initState();
 
-    _animationController =
+    animationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 8));
-    _animation = Tween(begin: 0.0, end: 1.0).animate(_animationController);
+    animation = Tween(begin: 0.0, end: 1.0).animate(animationController);
 
-    _animationController.addListener(
+    animationController.addListener(
       () => setState(() {}),
     );
 
-    _animationController.forward();
+    animationController.forward();
   }
 
   @override
@@ -108,18 +108,29 @@ class _MyHomePageState extends State<MyHomePage>
       body: Center(
         child: Stack(
           alignment: Alignment.center,
-          children: size
-              .map((radius) => Container(
-                    height: radius * _animation.value,
-                    width: radius * _animation.value,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color:
-                            Colors.purple.withOpacity(1.0 - _animation.value)),
-                  ))
-              .toList(),
+          children: [
+            rippleContainer(size[0], animation),
+            rippleContainer(size[1], animation),
+            rippleContainer(size[2], animation),
+            rippleContainer(size[3], animation),
+            rippleContainer(size[4], animation),
+            Icon(
+              Icons.call,
+              color: Colors.white,
+            )
+          ],
         ),
       ),
     );
   }
+}
+
+Widget rippleContainer(radius, dynamic animation) {
+  return Container(
+    height: radius * animation.value,
+    width: radius * animation.value,
+    decoration: BoxDecoration(
+        color: Colors.purple.withOpacity(1.0 - animation.value),
+        shape: BoxShape.circle),
+  );
 }
