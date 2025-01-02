@@ -67,51 +67,49 @@ class MyHomePage extends StatefulWidget {
   }
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  var arrNames = [
-    {'name': 'Amit', 'mob': '01712345678', 'unRead': '3'},
-    {'name': 'Tonoy', 'mob': '01798765432', 'unRead': '5'},
-    {'name': 'Anupom', 'mob': '01712345678', 'unRead': '1'},
-    {'name': 'Avi', 'mob': '01712121213', 'unRead': '7'},
-    {'name': 'Tanzil', 'mob': '01712345678', 'unRead': '3'},
-    {'name': 'Sayanta', 'mob': '01798765432', 'unRead': '5'},
-    {'name': 'Mahmud', 'mob': '01712345678', 'unRead': '1'},
-    {'name': 'Rayhan', 'mob': '01712121213', 'unRead': '7'},
-    {'name': 'Raihan', 'mob': '01712345678', 'unRead': '3'},
-    {'name': 'Shesher', 'mob': '01798765432', 'unRead': '5'},
-    {'name': 'Amit', 'mob': '01712345678', 'unRead': '3'},
-    {'name': 'Tonoy', 'mob': '01798765432', 'unRead': '5'},
-  ];
+class _MyHomePageState extends State<MyHomePage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController animationController;
+  late Animation animation;
+  late Animation colorAnimation;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    animationController =
+        AnimationController(vsync: this, duration: Duration(seconds: 4));
+    animation = Tween(begin: 100.0, end: 200.0).animate(animationController);
+
+    colorAnimation = ColorTween(begin: Colors.purple, end: Colors.yellow)
+        .animate(animationController);
+
+    animationController.addListener(() {
+      setState(() {});
+    });
+
+    animationController.forward();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Mapping Lists to Widget",
-            style: TextStyle(
-                fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),
-          ),
-          backgroundColor: Colors.purple.shade600,
+      appBar: AppBar(
+        title: Text(
+          "Tween Animation ",
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),
         ),
-        body: ListView(
-          children: arrNames
-              .map((value) => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.grey.shade400,
-                          borderRadius: BorderRadius.circular(16)),
-                      child: ListTile(
-                        leading: Icon(Icons.account_circle),
-                        title: Text('${value['name']}'),
-                        subtitle: Text('${value['mob']}'),
-                        trailing: CircleAvatar(
-                            radius: 10, child: Text('${value['unRead']}')),
-                      ),
-                    ),
-                  ))
-              .toList(),
-        ));
+        backgroundColor: Colors.purple.shade600,
+      ),
+      body: Center(
+        child: Container(
+          height: animation.value,
+          width: animation.value,
+          color: colorAnimation.value,
+        ),
+      ),
+    );
   }
 }
