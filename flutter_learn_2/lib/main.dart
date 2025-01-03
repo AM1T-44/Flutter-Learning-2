@@ -28,30 +28,46 @@ class SplashScreen extends StatefulWidget {
 
   @override
   State<SplashScreen> createState() {
-    return _SplashScreen();
+    return SplashScreenState();
   }
 }
 
-class _SplashScreen extends State<SplashScreen> {
+class SplashScreenState extends State<SplashScreen> {
+  static const String KEYLOGIN = 'Login';
   @override
   void initState() {
     Timer(
-      const Duration(seconds: 0),
+      const Duration(seconds: 1),
       () {
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const MyHomePage(),
-            ));
+        whereToGo();
       },
     );
+  }
+
+  void whereToGo() async {
+    var sharePrefs = await SharedPreferences.getInstance();
+    var isLogedIn = sharePrefs.getBool(KEYLOGIN);
+
+    if (isLogedIn == true) {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MyHomePage(),
+          ));
+    } else {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const LoginPage(),
+          ));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.blue.shade400,
+        color: Color(0xff28b8d5),
         child: const Center(
           child: Text(
             'Flutter Learning',
@@ -64,75 +80,120 @@ class _SplashScreen extends State<SplashScreen> {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<MyHomePage> createState() {
-    return _MyHomePageState();
+  State<LoginPage> createState() {
+    return LoginPageState();
   }
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  var nameController = TextEditingController();
-  var nameValue = "No Name Saved";
-
+class LoginPageState extends State<LoginPage> {
+  var email = TextEditingController();
+  var pass = TextEditingController();
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    getValue();
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: GradientAppBar(
+          gradient: const LinearGradient(
+              colors: [Color(0xff020344), Color(0xff28b8d5)]),
+          title: Center(child: Text('Login')),
+        ),
+        body: Center(
+          child: Container(
+            width: 250,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.account_circle,
+                  size: 50,
+                  color: Color(0xff28b8d5),
+                ),
+                SizedBox(
+                  height: 11,
+                ),
+                TextField(
+                  controller: email,
+                  decoration: InputDecoration(
+                      label: Text('Email'),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16))),
+                ),
+                SizedBox(
+                  height: 11,
+                ),
+                TextField(
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                      label: Text('Password'),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16))),
+                ),
+                SizedBox(
+                  height: 11,
+                ),
+                ElevatedButton(
+                    onPressed: () async {
+                      var sharedPrefs = await SharedPreferences.getInstance();
+                      sharedPrefs.setBool(SplashScreenState.KEYLOGIN, true);
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MyHomePage(),
+                          ));
+                    },
+                    child: Text(
+                      'LogIn',
+                    ),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xff28b8d5),
+                        foregroundColor: Color(0xff020344)))
+              ],
+            ),
+          ),
+        ));
   }
+}
 
-  void getValue() async {
-    var prefs = await SharedPreferences.getInstance();
-
-    var getName = prefs.getString('name');
-
-    nameValue = getName ?? "No value Saved";
-    setState(() {});
-  }
-
+class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GradientAppBar(
         gradient: const LinearGradient(
             colors: [Color(0xff020344), Color(0xff28b8d5)]),
-        title: const Text('Store and Retrieve Data Using Shared Preference'),
+        title: Center(child: Text('Home')),
       ),
-      body: Center(
-        child: SizedBox(
-          width: 200,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextField(
-                controller: nameController,
-                decoration: InputDecoration(
-                    label: const Text('Name'),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15))),
-              ),
-              const SizedBox(
-                height: 11,
-              ),
-              ElevatedButton(
-                  onPressed: () async {
-                    var name = nameController.text.toString();
+      body: Container(
+        color: Color(0xff28b8d5),
+        height: double.infinity,
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.home,
+              size: 70,
+              color: Color.fromARGB(167, 254, 254, 254),
+            ),
+            ElevatedButton(
+                onPressed: () async {
+                  var sharedPrefs = await SharedPreferences.getInstance();
+                  sharedPrefs.setBool(SplashScreenState.KEYLOGIN, false);
 
-                    var prefs = await SharedPreferences.getInstance();
-
-                    prefs.setString('name', name);
-                  },
-                  child: const Text("Save")),
-              const SizedBox(
-                height: 11,
-              ),
-              Text(nameValue)
-            ],
-          ),
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginPage(),
+                      ));
+                },
+                child: Text('LogOut'),
+                style: ElevatedButton.styleFrom(
+                    foregroundColor: Color(0xff28b8d5),
+                    backgroundColor: Color(0xff020344)))
+          ],
         ),
       ),
     );
