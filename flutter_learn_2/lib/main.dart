@@ -4,9 +4,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_gradient_app_bar/flutter_gradient_app_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
     );
@@ -39,7 +41,7 @@ class _SplashScreen extends State<SplashScreen> {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => MyHomePage(),
+              builder: (context) => const MyHomePage(),
             ));
       },
     );
@@ -52,7 +54,7 @@ class _SplashScreen extends State<SplashScreen> {
         color: Colors.blue.shade400,
         child: const Center(
           child: Text(
-            'Animation Learning',
+            'Flutter Learning',
             style: TextStyle(
                 fontSize: 25, fontWeight: FontWeight.w400, color: Colors.white),
           ),
@@ -71,66 +73,68 @@ class MyHomePage extends StatefulWidget {
   }
 }
 
-class _MyHomePageState extends State<MyHomePage>
-    with SingleTickerProviderStateMixin {
-  late AnimationController animationController;
-  late Animation animation;
-
-  var size = [150.0, 200.0, 250.0, 300.0, 350.0];
+class _MyHomePageState extends State<MyHomePage> {
+  var nameController = TextEditingController();
+  var nameValue = "No Name Saved";
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    animationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 8));
-    animation = Tween(begin: 0.0, end: 1.0).animate(animationController);
+    getValue();
+  }
 
-    animationController.addListener(
-      () => setState(() {}),
-    );
+  void getValue() async {
+    var prefs = await SharedPreferences.getInstance();
 
-    animationController.forward();
+    var getName = prefs.getString('name');
+
+    nameValue = getName ?? "No value Saved";
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Ripple Animation Effects",
-          style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),
-        ),
-        backgroundColor: Colors.purple.shade600,
+      appBar: GradientAppBar(
+        gradient: const LinearGradient(
+            colors: [Color(0xff020344), Color(0xff28b8d5)]),
+        title: const Text('Store and Retrieve Data Using Shared Preference'),
       ),
       body: Center(
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            rippleContainer(size[0], animation),
-            rippleContainer(size[1], animation),
-            rippleContainer(size[2], animation),
-            rippleContainer(size[3], animation),
-            rippleContainer(size[4], animation),
-            Icon(
-              Icons.call,
-              color: Colors.white,
-            )
-          ],
+        child: SizedBox(
+          width: 200,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextField(
+                controller: nameController,
+                decoration: InputDecoration(
+                    label: const Text('Name'),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15))),
+              ),
+              const SizedBox(
+                height: 11,
+              ),
+              ElevatedButton(
+                  onPressed: () async {
+                    var name = nameController.text.toString();
+
+                    var prefs = await SharedPreferences.getInstance();
+
+                    prefs.setString('name', name);
+                  },
+                  child: const Text("Save")),
+              const SizedBox(
+                height: 11,
+              ),
+              Text(nameValue)
+            ],
+          ),
         ),
       ),
     );
   }
-}
-
-Widget rippleContainer(radius, dynamic animation) {
-  return Container(
-    height: radius * animation.value,
-    width: radius * animation.value,
-    decoration: BoxDecoration(
-        color: Colors.purple.withOpacity(1.0 - animation.value),
-        shape: BoxShape.circle),
-  );
 }
